@@ -52,6 +52,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">🔍 Instant media inspection · Video, audio & image specs without terminal</div>
   <img class="icon" src="../icon-512.png" alt="" width="112" height="112">
   <h1>Probette</h1>
   <p class="tagline">Tutto il lato tecnico di un file multimediale, a parole.</p>
@@ -108,6 +109,68 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="probette-stage" role="group" aria-label="Interactive demo: media inspector file specifications viewer">
+    <div class="probette-card">
+      <div class="probette-file-header">
+        <span class="probette-fname" id="pbFname">cinematic_trailer_4k.mov</span>
+        <span class="probette-fsize" id="pbFsize">2.4 GB</span>
+      </div>
+      <div class="probette-specs">
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Codec</div>
+          <div class="probette-spec-val" id="pbCodec">Apple ProRes 422 HQ</div>
+        </div>
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Resolution</div>
+          <div class="probette-spec-val" id="pbRes">3840×2160 (59.94 fps)</div>
+        </div>
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Color Profile</div>
+          <div class="probette-spec-val" id="pbColor">10-bit Rec.709</div>
+        </div>
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Audio Track</div>
+          <div class="probette-spec-val" id="pbAudio">PCM 24-bit 48kHz Stereo</div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-controls">
+      <button class="app-chip active" data-type="video">🎬 4K ProRes Video</button>
+      <button class="app-chip" data-type="audio">🎵 Lossless FLAC Audio</button>
+      <button class="app-chip" data-type="photo">📷 60MP RAW Photo</button>
+    </div>
+    <span class="demo-hint">💡 Click any media preset chip to inspect technical streams and codec details</span>
+  </div>
+  <p class="demo-note">Visual simulation. On Mac, iPhone and iPad, Probette inspects media files instantly via drag-and-drop or Quick Look.</p>
+</div>
+<script>
+(function() {
+  var fname = document.getElementById('pbFname'), fsize = document.getElementById('pbFsize');
+  var codec = document.getElementById('pbCodec'), res = document.getElementById('pbRes');
+  var color = document.getElementById('pbColor'), audio = document.getElementById('pbAudio');
+  var chips = document.querySelectorAll('.probette-stage .app-chip');
+
+  var files = {
+    'video': { n: 'cinematic_trailer_4k.mov', s: '2.4 GB', c: 'Apple ProRes 422 HQ', r: '3840×2160 (59.94 fps)', cl: '10-bit Rec.709', a: 'PCM 24-bit 48kHz Stereo' },
+    'audio': { n: 'master_recording.flac', s: '68.5 MB', c: 'FLAC Lossless', r: '96.0 kHz / 24-bit', cl: 'sRGB Cover Art', a: '2 Ch (Stereo) 2,840 kbps' },
+    'photo': { n: 'landscape_sony.arw', s: '62.4 MB', c: 'Sony 14-bit RAW', r: '9504×6336 (60.2 MP)', cl: 'Adobe RGB (1998)', a: 'None (Still Image)' }
+  };
+
+  chips.forEach(function(c) {
+    c.addEventListener('click', function() {
+      chips.forEach(function(x) { x.classList.remove('active'); });
+      c.classList.add('active');
+      var t = c.getAttribute('data-type');
+      var d = files[t];
+      if (!d) return;
+      fname.textContent = d.n; fsize.textContent = d.s;
+      codec.textContent = d.c; res.textContent = d.r;
+      color.textContent = d.cl; audio.textContent = d.a;
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -126,6 +189,48 @@
   <p class="note">Richiede macOS 14 Sonoma o versioni successive; su iPhone e iPad, iOS e iPadOS 17 o versioni successive; su Android, Android 8.0 o versioni successive. Un solo acquisto vale per Mac, iPhone e iPad; la versione Android si scarica da Google Play.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Complex terminal tools vs Probette</h2>
+  <p class="section-lead">Instant media specs at a glance without terminal commands or video editing suites.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Terminal ffprobe / Heavy NLEs</th>
+          <th class="highlight-col">Probette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Speed of Access</strong></td>
+          <td>Typing long terminal commands or opening huge suites</td>
+          <td class="highlight-col"><strong>Instant drag-and-drop inspection in under 0.1 seconds</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Data Legibility</strong></td>
+          <td>Walls of esoteric hex flags and terminal text</td>
+          <td class="highlight-col"><strong>Clean visual badges: codec, color space, fps, and audio layout</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Format Support</strong></td>
+          <td>QuickTime refuses MKV, WebM, FLAC, or RAW</td>
+          <td class="highlight-col"><strong>Inspects virtually any container, video codec, or audio format</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Privacy & Safety</strong></td>
+          <td>Uploading proprietary media to web converters</td>
+          <td class="highlight-col"><strong>100% on-device inspection; files never leave your computer</strong></td>
+        </tr>
+        <tr>
+          <td><strong>macOS Integration</strong></td>
+          <td>Heavy standalone windows cluttering workspace</td>
+          <td class="highlight-col"><strong>Lightweight Quick Look and menu bar inspection</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>La privacy in un paragrafo</h2>
   <p>Probette non si connette mai a internet. I file che apri restano sul tuo dispositivo. Nessun account, nessun tracciamento, nessuna analisi, e non viene raccolto alcun dato. L’<a href="privacy.html">informativa sulla privacy</a> completa dice lo stesso in modo più esteso.</p>

@@ -52,6 +52,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">🔍 Kiểm tra thông số media tức thì · Không cần dòng lệnh hay phần mềm nặng</div>
   <img class="icon" src="../icon-512.png" alt="" width="112" height="112">
   <h1>Probette</h1>
   <p class="tagline">Mọi thông tin kỹ thuật của một tệp media, nói bằng lời.</p>
@@ -108,6 +109,68 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="probette-stage" role="group" aria-label="Bản demo tương tác: xem chi tiết codec, luồng âm thanh và hình ảnh">
+    <div class="probette-card">
+      <div class="probette-file-header">
+        <span class="probette-fname" id="pbFname">cinematic_trailer_4k.mov</span>
+        <span class="probette-fsize" id="pbFsize">2.4 GB</span>
+      </div>
+      <div class="probette-specs">
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Codec</div>
+          <div class="probette-spec-val" id="pbCodec">Apple ProRes 422 HQ</div>
+        </div>
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Độ phân giải</div>
+          <div class="probette-spec-val" id="pbRes">3840×2160 (59.94 fps)</div>
+        </div>
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Hệ màu</div>
+          <div class="probette-spec-val" id="pbColor">10-bit Rec.709</div>
+        </div>
+        <div class="probette-spec-box">
+          <div class="probette-spec-lbl">Luồng âm thanh</div>
+          <div class="probette-spec-val" id="pbAudio">PCM 24-bit 48kHz Stereo</div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-controls">
+      <button class="app-chip active" data-type="video">🎬 Video 4K ProRes</button>
+      <button class="app-chip" data-type="audio">🎵 Nhạc FLAC Lossless</button>
+      <button class="app-chip" data-type="photo">📷 Ảnh RAW 60MP</button>
+    </div>
+    <span class="demo-hint">💡 Nhấn vào từng tệp mẫu để xem thông số kỹ thuật codec và luồng media</span>
+  </div>
+  <p class="demo-note">Mô phỏng trực quan. Trên Mac, iPhone và iPad, Probette phân tích tệp tức thì qua kéo thả hoặc Quick Look.</p>
+</div>
+<script>
+(function() {
+  var fname = document.getElementById('pbFname'), fsize = document.getElementById('pbFsize');
+  var codec = document.getElementById('pbCodec'), res = document.getElementById('pbRes');
+  var color = document.getElementById('pbColor'), audio = document.getElementById('pbAudio');
+  var chips = document.querySelectorAll('.probette-stage .app-chip');
+
+  var files = {
+    'video': { n: 'cinematic_trailer_4k.mov', s: '2.4 GB', c: 'Apple ProRes 422 HQ', r: '3840×2160 (59.94 fps)', cl: '10-bit Rec.709', a: 'PCM 24-bit 48kHz Stereo' },
+    'audio': { n: 'master_recording.flac', s: '68.5 MB', c: 'FLAC Lossless', r: '96.0 kHz / 24-bit', cl: 'sRGB Cover Art', a: '2 Ch (Stereo) 2,840 kbps' },
+    'photo': { n: 'landscape_sony.arw', s: '62.4 MB', c: 'Sony 14-bit RAW', r: '9504×6336 (60.2 MP)', cl: 'Adobe RGB (1998)', a: 'None (Still Image)' }
+  };
+
+  chips.forEach(function(c) {
+    c.addEventListener('click', function() {
+      chips.forEach(function(x) { x.classList.remove('active'); });
+      c.classList.add('active');
+      var t = c.getAttribute('data-type');
+      var d = files[t];
+      if (!d) return;
+      fname.textContent = d.n; fsize.textContent = d.s;
+      codec.textContent = d.c; res.textContent = d.r;
+      color.textContent = d.cl; audio.textContent = d.a;
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -126,6 +189,48 @@
   <p class="note">Yêu cầu macOS 14 Sonoma trở lên; trên iPhone và iPad, iOS và iPadOS 17 trở lên; trên Android, Android 8.0 trở lên. Mua một lần dùng được trên Mac, iPhone và iPad; phiên bản Android có trên Google Play.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Dòng lệnh phức tạp so với Probette</h2>
+  <p class="section-lead">Nắm trọn thông số video, âm thanh và ảnh trong chớp mắt mà không cần mở phần mềm dựng phim cồng kềnh.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Đặc tính</th>
+          <th>Lệnh terminal / Phần mềm dựng</th>
+          <th class="highlight-col">Probette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tốc độ xem</strong></td>
+          <td>Gõ dòng lệnh ffprobe dài dòng hoặc chờ mở Premiere</td>
+          <td class="highlight-col"><strong>Kéo thả vào là đọc thông số ngay trong chưa đầy 0.1 giây</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Độ trực quan</strong></td>
+          <td>Rừng chữ hex khó hiểu và thông số kỹ thuật rối mắt</td>
+          <td class="highlight-col"><strong>Giao diện thẻ gọn gàng: codec, chuẩn màu, fps, số kênh audio</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Độ tương thích</strong></td>
+          <td>QuickTime từ chối mở định dạng MKV, WebM, FLAC hay RAW</td>
+          <td class="highlight-col"><strong>Hỗ trợ gần như mọi định dạng video, âm thanh và ảnh phổ biến</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Bảo mật tệp</strong></td>
+          <td>Phải tải video khách hàng lên các web soi thông số online</td>
+          <td class="highlight-col"><strong>Kiểm tra 100% ngoại tuyến trên máy, dữ liệu không rời thiết bị</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tích hợp hệ máy</strong></td>
+          <td>Mở cửa sổ to chiếm dụng không gian làm việc</td>
+          <td class="highlight-col"><strong>Tích hợp sẵn phím cách Quick Look và thanh menu siêu nhẹ</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Quyền riêng tư trong một đoạn</h2>
   <p>Probette không bao giờ kết nối internet. Các tệp bạn mở vẫn nằm trên thiết bị của bạn. Không tài khoản, không theo dõi, không phân tích, và không thu thập dữ liệu nào. <a href="privacy.html">Chính sách quyền riêng tư</a> đầy đủ nói cùng điều đó chi tiết hơn.</p>
